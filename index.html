@@ -6,70 +6,67 @@
   <title>2026 Slytherin WishList</title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Noto Sans JP', sans-serif;
-      background: linear-gradient(135deg, #0d1a0d 0%, #1a2f1a 50%, #0a1f0a 100%);
-      min-height: 100vh; padding: 15px; color: #c0c0c0;
-    }
-    .container { max-width: 650px; margin: 0 auto; }
-    .header { text-align: center; margin-bottom: 15px; }
-    .header h1 { font-family: 'Cinzel', serif; font-size: 1.5rem; color: #c0c0c0; text-shadow: 0 0 15px rgba(192,192,192,0.4); }
-    .header .subtitle { font-size: 0.75rem; color: #50c878; margin-top: 3px; }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Noto Sans JP',sans-serif;background:linear-gradient(135deg,#2a4a3a 0%,#3d5a4a 50%,#2f4f3f 100%);min-height:100vh;padding:15px;color:#e8e8e8;transition:all 0.5s;}
+    body.lumos{background:linear-gradient(135deg,#5a7a6a 0%,#7a9a8a 50%,#6a8a7a 100%)!important;}
+    body.incendio::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(circle,rgba(255,100,0,0.3) 0%,transparent 70%);animation:fire 0.5s;pointer-events:none;z-index:999;}
+    @keyframes fire{0%{opacity:0;}50%{opacity:1;}100%{opacity:0;}}
+    .container{max-width:650px;margin:0 auto;}
+    .header{text-align:center;margin-bottom:12px;}
+    .header h1{font-family:'Cinzel',serif;font-size:1.4rem;color:#c0c0c0;text-shadow:0 0 10px rgba(192,192,192,0.3);}
+    .header .subtitle{font-size:0.7rem;color:#7fb97f;margin-top:2px;}
+    .hourglasses{display:flex;justify-content:center;gap:10px;margin-bottom:15px;}
+    .hg-wrap{display:flex;flex-direction:column;align-items:center;}
+    .hg{width:28px;height:70px;border:2px solid rgba(255,255,255,0.15);border-radius:14px;background:rgba(0,0,0,0.2);overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;}
+    .hg.active{border-color:#50c878;box-shadow:0 0 8px rgba(80,200,120,0.4);}
+    .hg-fill{width:100%;transition:height 0.8s ease;border-radius:0 0 12px 12px;}
+    .hg-fill.g{background:linear-gradient(180deg,#ffd700,#ae0001);}.hg-fill.s{background:linear-gradient(180deg,#7fff7f,#1a472a);}.hg-fill.r{background:linear-gradient(180deg,#87ceeb,#0e1a40);}.hg-fill.h{background:linear-gradient(180deg,#ffeb3b,#8b6914);}
+    .hg-label{font-size:0.55rem;margin-top:3px;color:#888;}.hg-label.active{color:#7fff7f;}
+    .hg-pts{font-size:0.6rem;color:#666;}.hg-pts.active{color:#7fff7f;}
+    .points-display{text-align:center;margin-bottom:12px;}
+    .points-big{font-family:'Cinzel',serif;font-size:2.2rem;color:#7fff7f;text-shadow:0 0 15px rgba(127,255,127,0.4);}
+    .next-ms{font-size:0.8rem;color:#ccc;margin-top:5px;padding:6px 12px;background:rgba(0,0,0,0.2);border-radius:15px;display:inline-block;}
+    .badge-row{display:flex;justify-content:center;flex-wrap:wrap;gap:4px;margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.15);border-radius:8px;}
+    .badge{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;}
+    .badge.locked{background:rgba(50,50,50,0.3);filter:grayscale(1);opacity:0.2;}
+    .badge.unlocked{background:linear-gradient(135deg,#2d5a3d,#3d7a4d);box-shadow:0 0 6px rgba(80,200,120,0.5);}
+    .current-event{text-align:center;font-size:1rem;margin-bottom:12px;padding:8px;background:rgba(80,200,120,0.1);border-radius:8px;border-left:3px solid #50c878;}
+    .input-section{display:flex;gap:6px;margin-bottom:12px;}
+    .input-section input{flex:1;padding:8px 10px;border:2px solid rgba(80,200,120,0.3);border-radius:6px;background:rgba(0,0,0,0.2);color:#e8e8e8;font-size:0.85rem;}
+    .input-section input:focus{outline:none;border-color:#50c878;}
+    .pts-input{width:55px;text-align:center;}
+    .input-section button{padding:8px 14px;background:linear-gradient(135deg,#2d5a3d,#3d7a4d);border:none;border-radius:6px;color:#e8e8e8;font-weight:bold;cursor:pointer;}
+    .input-section button:hover{box-shadow:0 0 10px rgba(80,200,120,0.5);}
+    .wish-list{list-style:none;max-height:180px;overflow-y:auto;transition:transform 0.5s;}
+    .wish-list.float{transform:translateY(-10px);}
+    .wish-item{display:flex;align-items:center;gap:8px;padding:8px;background:rgba(255,255,255,0.03);border:1px solid rgba(80,200,120,0.1);border-radius:6px;margin-bottom:4px;}
+    .wish-item:hover{background:rgba(80,200,120,0.08);}
+    .wish-item.completed{opacity:0.4;}
+    .wish-item.completed .wish-text{text-decoration:line-through;}
+    .checkbox{width:18px;height:18px;border:2px solid #50c878;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .checkbox:hover{background:rgba(80,200,120,0.2);}
+    .checkbox.checked{background:#50c878;}
+    .checkbox.checked::after{content:'✓';font-size:9px;color:#1a2a1a;}
+    .wish-text{flex:1;font-size:0.8rem;}
+    .wish-pts{font-size:0.65rem;padding:2px 6px;border-radius:8px;background:rgba(80,200,120,0.15);color:#7fff7f;}
+    .del-btn{background:none;border:none;color:#555;cursor:pointer;font-size:0.9rem;}
+    .del-btn:hover{color:#c0392b;}
+    .empty{text-align:center;padding:15px;color:#777;font-size:0.8rem;}
     
-    .hourglasses { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; }
-    .hg-wrap { display: flex; flex-direction: column; align-items: center; }
-    .hg {
-      width: 30px; height: 80px; position: relative;
-      border: 2px solid rgba(255,255,255,0.2); border-radius: 15px;
-      background: rgba(0,0,0,0.3); overflow: hidden;
-      display: flex; flex-direction: column; justify-content: flex-end;
-    }
-    .hg.slytherin { border-color: #2d5a2d; box-shadow: 0 0 10px rgba(45,90,45,0.5); }
-    .hg-fill { width: 100%; transition: height 0.8s ease; border-radius: 0 0 13px 13px; }
-    .hg-fill.gryffindor { background: linear-gradient(180deg, #ffd700 0%, #ae0001 100%); }
-    .hg-fill.slytherin { background: linear-gradient(180deg, #50c878 0%, #1a472a 100%); }
-    .hg-fill.ravenclaw { background: linear-gradient(180deg, #a0c4ff 0%, #0e1a40 100%); }
-    .hg-fill.hufflepuff { background: linear-gradient(180deg, #ffeb3b 0%, #8b6914 100%); }
-    .hg-label { font-size: 0.6rem; margin-top: 5px; color: #888; }
-    .hg-label.active { color: #50c878; font-weight: bold; }
-    .hg-pts { font-size: 0.65rem; color: #666; }
-    .hg-pts.active { color: #50c878; }
+    .spells-section{margin-top:15px;padding:12px;background:rgba(0,0,0,0.2);border-radius:10px;}
+    .spells-title{font-size:0.75rem;color:#888;margin-bottom:8px;text-align:center;}
+    .spells{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;}
+    .spell{padding:6px 12px;border-radius:20px;font-size:0.7rem;cursor:pointer;transition:all 0.3s;border:1px solid transparent;}
+    .spell.locked{background:rgba(50,50,50,0.3);color:#555;cursor:not-allowed;}
+    .spell.unlocked{background:linear-gradient(135deg,#2d5a3d,#3d7a4d);color:#e8e8e8;border-color:rgba(80,200,120,0.3);}
+    .spell.unlocked:hover{transform:scale(1.1);box-shadow:0 0 15px rgba(80,200,120,0.5);}
+    .spell.unlocked:active{transform:scale(0.95);}
     
-    .points-display { text-align: center; margin-bottom: 15px; }
-    .points-big { font-family: 'Cinzel', serif; font-size: 2.5rem; color: #50c878; text-shadow: 0 0 20px rgba(80,200,120,0.5); }
-    .points-sub { font-size: 0.85rem; color: #888; }
-    .next-milestone { font-size: 0.9rem; color: #c0c0c0; margin-top: 8px; padding: 8px 15px; background: rgba(0,0,0,0.3); border-radius: 20px; display: inline-block; }
-    
-    .badge-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 10px; }
-    .milestone-badge { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; }
-    .milestone-badge.locked { background: rgba(50,50,50,0.4); filter: grayscale(1); opacity: 0.25; }
-    .milestone-badge.unlocked { background: linear-gradient(135deg, #1a472a, #2d5a2d); box-shadow: 0 0 8px rgba(80,200,120,0.6); }
-    
-    .current-event { text-align: center; font-size: 1.1rem; margin-bottom: 15px; padding: 10px; background: rgba(45,90,45,0.15); border-radius: 10px; border-left: 3px solid #50c878; }
-    
-    .input-section { display: flex; gap: 8px; margin-bottom: 15px; }
-    .input-section input { flex: 1; padding: 10px 12px; border: 2px solid rgba(45,90,45,0.3); border-radius: 8px; background: rgba(0,0,0,0.3); color: #c0c0c0; font-size: 0.9rem; }
-    .input-section input:focus { outline: none; border-color: #50c878; }
-    .pts-input { width: 60px; text-align: center; }
-    .input-section button { padding: 10px 18px; background: linear-gradient(135deg, #1a472a, #2d5a2d); border: none; border-radius: 8px; color: #c0c0c0; font-weight: bold; cursor: pointer; }
-    .input-section button:hover { box-shadow: 0 0 15px rgba(80,200,120,0.5); }
-    
-    .wish-list { list-style: none; max-height: 220px; overflow-y: auto; }
-    .wish-item { display: flex; align-items: center; gap: 10px; padding: 10px; background: rgba(255,255,255,0.02); border: 1px solid rgba(45,90,45,0.15); border-radius: 8px; margin-bottom: 5px; }
-    .wish-item:hover { background: rgba(45,90,45,0.08); }
-    .wish-item.completed { opacity: 0.4; }
-    .wish-item.completed .wish-text { text-decoration: line-through; }
-    .checkbox { width: 20px; height: 20px; border: 2px solid #2d5a2d; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .checkbox:hover { background: rgba(45,90,45,0.3); }
-    .checkbox.checked { background: #2d5a2d; }
-    .checkbox.checked::after { content: '✓'; font-size: 10px; color: #fff; }
-    .wish-text { flex: 1; font-size: 0.85rem; }
-    .wish-pts { font-size: 0.7rem; padding: 2px 8px; border-radius: 10px; background: rgba(80,200,120,0.2); color: #50c878; }
-    .del-btn { background: none; border: none; color: #444; cursor: pointer; font-size: 1rem; }
-    .del-btn:hover { color: #c0392b; }
-    .empty { text-align: center; padding: 20px; color: #555; font-size: 0.85rem; }
-    .quote { text-align: center; font-style: italic; color: #2d5a2d; margin-top: 15px; padding-top: 12px; border-top: 1px solid rgba(45,90,45,0.2); font-size: 0.75rem; }
+    .sparkle{position:fixed;pointer-events:none;z-index:1000;font-size:20px;animation:sparkle 1s forwards;}
+    @keyframes sparkle{0%{opacity:1;transform:scale(0) rotate(0deg);}50%{opacity:1;transform:scale(1.5) rotate(180deg);}100%{opacity:0;transform:scale(0) rotate(360deg);}}
+    .freeze{animation:freeze 0.5s;}
+    @keyframes freeze{0%,100%{filter:none;}50%{filter:brightness(1.5) saturate(0);}}
+    .quote{text-align:center;font-style:italic;color:#5a8a5a;margin-top:12px;padding-top:10px;border-top:1px solid rgba(80,200,120,0.15);font-size:0.7rem;}
   </style>
 </head>
 <body>
@@ -78,71 +75,71 @@
       <h1>🐍 2026 Slytherin WishList</h1>
       <p class="subtitle">野心を持って、目標を達成せよ</p>
     </div>
-    
     <div class="hourglasses">
-      <div class="hg-wrap">
-        <div class="hg"><div class="hg-fill gryffindor" style="height:35%"></div></div>
-        <p class="hg-label">🦁</p><p class="hg-pts">70</p>
-      </div>
-      <div class="hg-wrap">
-        <div class="hg slytherin"><div class="hg-fill slytherin" id="slytherinFill" style="height:0%"></div></div>
-        <p class="hg-label active">🐍</p><p class="hg-pts active" id="slytherinPts">0</p>
-      </div>
-      <div class="hg-wrap">
-        <div class="hg"><div class="hg-fill ravenclaw" style="height:45%"></div></div>
-        <p class="hg-label">🦅</p><p class="hg-pts">90</p>
-      </div>
-      <div class="hg-wrap">
-        <div class="hg"><div class="hg-fill hufflepuff" style="height:25%"></div></div>
-        <p class="hg-label">🦡</p><p class="hg-pts">50</p>
-      </div>
+      <div class="hg-wrap"><div class="hg"><div class="hg-fill g" style="height:35%"></div></div><p class="hg-label">🦁</p><p class="hg-pts">70</p></div>
+      <div class="hg-wrap"><div class="hg active"><div class="hg-fill s" id="sFill" style="height:0%"></div></div><p class="hg-label active">🐍</p><p class="hg-pts active" id="sPts">0</p></div>
+      <div class="hg-wrap"><div class="hg"><div class="hg-fill r" style="height:45%"></div></div><p class="hg-label">🦅</p><p class="hg-pts">90</p></div>
+      <div class="hg-wrap"><div class="hg"><div class="hg-fill h" style="height:25%"></div></div><p class="hg-label">🦡</p><p class="hg-pts">50</p></div>
     </div>
-    
     <div class="points-display">
-      <div class="points-big"><span id="currentPoints">0</span><span style="font-size:1rem;color:#666"> / 200</span></div>
-      <span class="next-milestone" id="nextText">次: 🐍 組み分け まであと10点</span>
+      <div class="points-big"><span id="pts">0</span><span style="font-size:0.9rem;color:#888"> / 200</span></div>
+      <span class="next-ms" id="nextMs">次: 🐍 組み分け まであと10点</span>
     </div>
-    
-    <div class="badge-row" id="badgeRow"></div>
-    <div class="current-event" id="currentEvent">🏰 ホグワーツ入学</div>
-    
+    <div class="badge-row" id="badges"></div>
+    <div class="current-event" id="curEvent">🏰 ホグワーツ入学</div>
     <div class="input-section">
-      <input type="text" id="wishInput" placeholder="新しいWishを入力...">
-      <input type="number" class="pts-input" id="ptsInput" value="4" min="1" max="20">
+      <input type="text" id="wishIn" placeholder="新しいWishを入力...">
+      <input type="number" class="pts-input" id="ptsIn" value="4" min="1" max="20">
       <button onclick="addWish()">追加</button>
     </div>
-    
     <ul class="wish-list" id="wishList"><li class="empty">🐍 Wishを追加して冒険を始めよう</li></ul>
+    
+    <div class="spells-section">
+      <div class="spells-title">📜 習得済み魔法（クリックで発動！）</div>
+      <div class="spells" id="spells"></div>
+    </div>
+    
     <div class="quote">"Those cunning folk use any means to achieve their ends."</div>
   </div>
 
   <script>
-    const MS = [
-      {p:0,i:'🏰',n:'ホグワーツ入学'},{p:10,i:'🐍',n:'組み分け：スリザリン！'},
-      {p:25,i:'🔓',n:'Alohomora習得'},{p:40,i:'🪶',n:'Wingardium Leviosa習得'},
-      {p:55,i:'🗿',n:'Petrificus Totalus習得'},{p:70,i:'🔦',n:'Lumos習得'},
-      {p:85,i:'🔥',n:'Incendio習得'},{p:100,i:'🐕',n:'フラッフィー突破'},
-      {p:115,i:'🌿',n:'悪魔の罠突破'},{p:130,i:'🔑',n:'空飛ぶ鍵ゲット！'},
-      {p:145,i:'♟️',n:'チェスの試練突破'},{p:160,i:'👹',n:'トロールを倒した！'},
-      {p:175,i:'🧪',n:'論理パズルを解いた！'},{p:190,i:'😈',n:'クィレルを倒した！'},
-      {p:200,i:'💎',n:'賢者の石を守った！'}
-    ];
-    let W = JSON.parse(localStorage.getItem('slytherin-wishes-2026')||'[]');
+    const MS=[{p:0,i:'🏰',n:'ホグワーツ入学'},{p:10,i:'🐍',n:'組み分け：スリザリン！'},{p:25,i:'🔓',n:'Alohomora習得',spell:'Alohomora'},{p:40,i:'🪶',n:'Wingardium Leviosa習得',spell:'Leviosa'},{p:55,i:'🗿',n:'Petrificus Totalus習得',spell:'Petrificus'},{p:70,i:'🔦',n:'Lumos習得',spell:'Lumos'},{p:85,i:'🔥',n:'Incendio習得',spell:'Incendio'},{p:100,i:'🐕',n:'フラッフィー突破'},{p:115,i:'🌿',n:'悪魔の罠突破'},{p:130,i:'🔑',n:'空飛ぶ鍵ゲット！'},{p:145,i:'♟️',n:'チェスの試練突破'},{p:160,i:'👹',n:'トロールを倒した！'},{p:175,i:'🧪',n:'論理パズルを解いた！'},{p:190,i:'😈',n:'クィレルを倒した！'},{p:200,i:'💎',n:'賢者の石を守った！'}];
+    const SPELLS=[{name:'Alohomora',icon:'🔓',req:25,desc:'鍵を開ける'},{name:'Leviosa',icon:'🪶',req:40,desc:'浮遊術'},{name:'Petrificus',icon:'🗿',req:55,desc:'石化術'},{name:'Lumos',icon:'🔦',req:70,desc:'光を灯す'},{name:'Incendio',icon:'🔥',req:85,desc:'炎を操る'}];
+    let W=JSON.parse(localStorage.getItem('slytherin-wishes-2026')||'[]');
     
-    document.addEventListener('DOMContentLoaded',()=>{render();document.getElementById('wishInput').addEventListener('keypress',e=>{if(e.key==='Enter')addWish();});});
+    document.addEventListener('DOMContentLoaded',()=>{render();document.getElementById('wishIn').addEventListener('keypress',e=>{if(e.key==='Enter')addWish();});});
     
     function pts(){return W.filter(w=>w.c).reduce((s,w)=>s+(w.p||0),0);}
     function idx(p){for(let i=MS.length-1;i>=0;i--)if(p>=MS[i].p)return i;return 0;}
     
     function render(){
       const p=pts(),i=idx(p),cur=MS[i],nxt=MS[i+1];
-      document.getElementById('currentPoints').textContent=p;
-      document.getElementById('slytherinPts').textContent=p;
-      document.getElementById('slytherinFill').style.height=Math.min(p/200*100,100)+'%';
-      document.getElementById('currentEvent').textContent=cur.i+' '+cur.n;
-      document.getElementById('nextText').textContent=nxt?`次: ${nxt.i} ${nxt.n} まであと${nxt.p-p}点`:'🎉 全マイルストーン達成！';
-      document.getElementById('badgeRow').innerHTML=MS.map((m,j)=>`<div class="milestone-badge ${p>=m.p?'unlocked':'locked'}" title="${m.n}">${m.i}</div>`).join('');
+      document.getElementById('pts').textContent=p;
+      document.getElementById('sPts').textContent=p;
+      document.getElementById('sFill').style.height=Math.min(p/200*100,100)+'%';
+      document.getElementById('curEvent').textContent=cur.i+' '+cur.n;
+      document.getElementById('nextMs').textContent=nxt?`次: ${nxt.i} ${nxt.n} まであと${nxt.p-p}点`:'🎉 全マイルストーン達成！';
+      document.getElementById('badges').innerHTML=MS.map((m,j)=>`<div class="badge ${p>=m.p?'unlocked':'locked'}" title="${m.n}">${m.i}</div>`).join('');
+      renderSpells(p);
       renderList();
+    }
+    
+    function renderSpells(p){
+      document.getElementById('spells').innerHTML=SPELLS.map(s=>`<div class="spell ${p>=s.req?'unlocked':'locked'}" onclick="${p>=s.req?`cast('${s.name}')`:''}"><span>${s.icon}</span> ${s.name}</div>`).join('');
+    }
+    
+    function cast(name){
+      if(name==='Alohomora'){for(let i=0;i<8;i++)setTimeout(()=>sparkle(),i*100);}
+      if(name==='Leviosa'){document.querySelector('.wish-list').classList.add('float');setTimeout(()=>document.querySelector('.wish-list').classList.remove('float'),1000);}
+      if(name==='Petrificus'){document.body.classList.add('freeze');setTimeout(()=>document.body.classList.remove('freeze'),500);}
+      if(name==='Lumos'){document.body.classList.add('lumos');setTimeout(()=>document.body.classList.remove('lumos'),2000);}
+      if(name==='Incendio'){document.body.classList.add('incendio');setTimeout(()=>document.body.classList.remove('incendio'),600);}
+    }
+    
+    function sparkle(){
+      const s=document.createElement('div');s.className='sparkle';s.textContent='✨';
+      s.style.left=Math.random()*window.innerWidth+'px';s.style.top=Math.random()*window.innerHeight+'px';
+      document.body.appendChild(s);setTimeout(()=>s.remove(),1000);
     }
     
     function renderList(){
@@ -151,12 +148,7 @@
       l.innerHTML=W.map(w=>`<li class="wish-item ${w.c?'completed':''}"><div class="checkbox ${w.c?'checked':''}" onclick="toggle(${w.id})"></div><span class="wish-text">${esc(w.t)}</span><span class="wish-pts">${w.p}pt</span><button class="del-btn" onclick="del(${w.id})">×</button></li>`).join('');
     }
     
-    function addWish(){
-      const inp=document.getElementById('wishInput'),t=inp.value.trim(),p=parseInt(document.getElementById('ptsInput').value)||4;
-      if(!t)return;
-      W.push({id:Date.now(),t,p,c:false});
-      save();render();inp.value='';
-    }
+    function addWish(){const inp=document.getElementById('wishIn'),t=inp.value.trim(),p=parseInt(document.getElementById('ptsIn').value)||4;if(!t)return;W.push({id:Date.now(),t,p,c:false});save();render();inp.value='';}
     function toggle(id){const w=W.find(x=>x.id===id);if(w){w.c=!w.c;save();render();}}
     function del(id){W=W.filter(w=>w.id!==id);save();render();}
     function save(){localStorage.setItem('slytherin-wishes-2026',JSON.stringify(W));}
