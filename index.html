@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026 Magical WishList</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Noto+Sans+JP&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      min-height: 100vh; padding: 20px; color: #f0e6d3;
+    }
+    .container { max-width: 600px; margin: 0 auto; }
+    .header { text-align: center; margin-bottom: 30px; position: relative; }
+    .header h1 {
+      font-family: 'Cinzel', serif; font-size: 2rem; color: #ffd700;
+      text-shadow: 0 0 20px rgba(255, 215, 0, 0.5); letter-spacing: 3px;
+    }
+    .header .subtitle { font-size: 0.9rem; color: #c0a080; margin-top: 5px; }
+    .stars { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; overflow: hidden; }
+    .star { position: absolute; color: #ffd700; animation: twinkle 2s infinite; }
+    @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+    .progress-section {
+      background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.3);
+      border-radius: 10px; padding: 15px; margin-bottom: 20px;
+    }
+    .progress-bar { height: 20px; background: rgba(0, 0, 0, 0.3); border-radius: 10px; overflow: hidden; }
+    .progress-fill {
+      height: 100%; background: linear-gradient(90deg, #740001, #ae0001, #eeba30);
+      border-radius: 10px; transition: width 0.5s ease; position: relative;
+    }
+    .progress-fill::after { content: '⚡'; position: absolute; right: 5px; top: 50%; transform: translateY(-50%); font-size: 14px; }
+    .progress-text { text-align: center; margin-top: 10px; font-family: 'Cinzel', serif; color: #ffd700; }
+    .house-badges { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+    .badge { padding: 8px 16px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; transition: all 0.3s; border: 2px solid transparent; }
+    .badge.gryffindor { background: linear-gradient(135deg, #740001, #ae0001); }
+    .badge.slytherin { background: linear-gradient(135deg, #1a472a, #2a623d); }
+    .badge.ravenclaw { background: linear-gradient(135deg, #0e1a40, #222f5b); }
+    .badge.hufflepuff { background: linear-gradient(135deg, #ecb939, #f0c75e); color: #000; }
+    .badge:hover, .badge.active { transform: scale(1.1); border-color: #ffd700; box-shadow: 0 0 15px rgba(255, 215, 0, 0.5); }
+    .input-section { display: flex; gap: 10px; margin-bottom: 20px; }
+    .input-section input {
+      flex: 1; padding: 12px 15px; border: 2px solid rgba(255, 215, 0, 0.3); border-radius: 8px;
+      background: rgba(0, 0, 0, 0.3); color: #f0e6d3; font-size: 1rem; font-family: 'Noto Sans JP', sans-serif;
+    }
+    .input-section input::placeholder { color: #888; }
+    .input-section input:focus { outline: none; border-color: #ffd700; box-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
+    .input-section button {
+      padding: 12px 20px; background: linear-gradient(135deg, #740001, #ae0001); border: none; border-radius: 8px;
+      color: #ffd700; font-family: 'Cinzel', serif; font-weight: bold; cursor: pointer; transition: all 0.3s;
+    }
+    .input-section button:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(174, 0, 1, 0.5); }
+    .wish-list { list-style: none; }
+    .wish-item {
+      display: flex; align-items: center; gap: 12px; padding: 15px;
+      background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 215, 0, 0.2);
+      border-radius: 8px; margin-bottom: 10px; transition: all 0.3s;
+    }
+    .wish-item:hover { background: rgba(255, 215, 0, 0.1); transform: translateX(5px); }
+    .wish-item.completed { opacity: 0.6; }
+    .wish-item.completed .wish-text { text-decoration: line-through; color: #888; }
+    .checkbox {
+      width: 24px; height: 24px; border: 2px solid #ffd700; border-radius: 50%; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: all 0.3s; flex-shrink: 0;
+    }
+    .checkbox:hover { background: rgba(255, 215, 0, 0.2); }
+    .checkbox.checked { background: #ffd700; color: #1a1a2e; }
+    .checkbox.checked::after { content: '⚡'; font-size: 12px; }
+    .wish-text { flex: 1; font-size: 1rem; }
+    .wish-category { font-size: 0.7rem; padding: 4px 8px; border-radius: 12px; background: rgba(255, 215, 0, 0.2); color: #ffd700; }
+    .delete-btn { background: none; border: none; color: #666; cursor: pointer; font-size: 1.2rem; transition: color 0.3s; }
+    .delete-btn:hover { color: #ae0001; }
+    .empty-state { text-align: center; padding: 40px; color: #888; }
+    .empty-state .wand { font-size: 3rem; margin-bottom: 15px; }
+    .quote { text-align: center; font-style: italic; color: #c0a080; margin-top: 30px; padding: 20px; border-top: 1px solid rgba(255, 215, 0, 0.2); }
+    .quote-text { font-size: 0.9rem; margin-bottom: 5px; }
+    .quote-author { font-size: 0.8rem; color: #888; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="stars" id="stars"></div>
+      <h1>✨ 2026 Magical WishList ✨</h1>
+      <p class="subtitle">あなたの願いに魔法をかけよう</p>
+    </div>
+    <div class="progress-section">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width: 0%"></div></div>
+      <p class="progress-text"><span id="completedCount">0</span> / <span id="totalCount">0</span> 達成</p>
+    </div>
+    <div class="house-badges">
+      <span class="badge gryffindor active" data-category="勇気">🦁 勇気</span>
+      <span class="badge slytherin" data-category="野心">🐍 野心</span>
+      <span class="badge ravenclaw" data-category="知恵">🦅 知恵</span>
+      <span class="badge hufflepuff" data-category="努力">🦡 努力</span>
+    </div>
+    <div class="input-section">
+      <input type="text" id="wishInput" placeholder="新しい願いを入力... (Accio Dream!)">
+      <button onclick="addWish()">追加</button>
+    </div>
+    <ul class="wish-list" id="wishList">
+      <li class="empty-state"><div class="wand">🪄</div><p>まだ願いがありません</p><p>上から追加して魔法をかけよう！</p></li>
+    </ul>
+    <div class="quote">
+      <p class="quote-text">"It does not do to dwell on dreams and forget to live."</p>
+      <p class="quote-author">— Albus Dumbledore</p>
+    </div>
+  </div>
+  <script>
+    let wishes = JSON.parse(localStorage.getItem('hp-wishes-2026') || '[]');
+    let currentCategory = '勇気';
+    document.addEventListener('DOMContentLoaded', () => { createStars(); renderWishes(); setupCategoryBadges(); setupEnterKey(); });
+    function createStars() {
+      const c = document.getElementById('stars');
+      for (let i = 0; i < 20; i++) {
+        const s = document.createElement('span'); s.className = 'star'; s.innerHTML = '✦';
+        s.style.left = Math.random()*100+'%'; s.style.top = Math.random()*100+'%';
+        s.style.fontSize = (Math.random()*10+5)+'px'; s.style.animationDelay = Math.random()*2+'s'; c.appendChild(s);
+      }
+    }
+    function setupCategoryBadges() {
+      document.querySelectorAll('.badge').forEach(b => {
+        b.addEventListener('click', () => {
+          document.querySelectorAll('.badge').forEach(x => x.classList.remove('active'));
+          b.classList.add('active'); currentCategory = b.dataset.category;
+        });
+      });
+    }
+    function setupEnterKey() { document.getElementById('wishInput').addEventListener('keypress', e => { if (e.key === 'Enter') addWish(); }); }
+    function addWish() {
+      const input = document.getElementById('wishInput'); const text = input.value.trim(); if (!text) return;
+      wishes.push({ id: Date.now(), text, category: currentCategory, completed: false });
+      saveWishes(); renderWishes(); input.value = '';
+      input.style.boxShadow = '0 0 30px rgba(255, 215, 0, 0.8)'; setTimeout(() => input.style.boxShadow = '', 500);
+    }
+    function toggleWish(id) { const w = wishes.find(x => x.id === id); if (w) { w.completed = !w.completed; saveWishes(); renderWishes(); } }
+    function deleteWish(id) { wishes = wishes.filter(w => w.id !== id); saveWishes(); renderWishes(); }
+    function saveWishes() { localStorage.setItem('hp-wishes-2026', JSON.stringify(wishes)); }
+    function renderWishes() {
+      const list = document.getElementById('wishList');
+      const completed = wishes.filter(w => w.completed).length, total = wishes.length;
+      document.getElementById('completedCount').textContent = completed;
+      document.getElementById('totalCount').textContent = total;
+      document.getElementById('progressFill').style.width = total > 0 ? (completed/total*100)+'%' : '0%';
+      if (!wishes.length) { list.innerHTML = '<li class="empty-state"><div class="wand">🪄</div><p>まだ願いがありません</p><p>上から追加して魔法をかけよう！</p></li>'; return; }
+      list.innerHTML = wishes.map(w => `<li class="wish-item ${w.completed?'completed':''}"><div class="checkbox ${w.completed?'checked':''}" onclick="toggleWish(${w.id})"></div><span class="wish-text">${escapeHtml(w.text)}</span><span class="wish-category">${w.category}</span><button class="delete-btn" onclick="deleteWish(${w.id})">×</button></li>`).join('');
+    }
+    function escapeHtml(t) { const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+  </script>
+</body>
+</html>
