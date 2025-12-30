@@ -4,127 +4,145 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>2026 Slytherin WishList</title>
-  <link href="100" rel="stylesheet">
+  <link href="104" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Noto Sans JP', sans-serif;
       background: linear-gradient(135deg, #0d1a0d 0%, #1a2f1a 50%, #0a1f0a 100%);
-      min-height: 100vh; padding: 20px; color: #c0c0c0;
+      min-height: 100vh; padding: 15px; color: #c0c0c0;
     }
     .container { max-width: 650px; margin: 0 auto; }
-    .header { text-align: center; margin-bottom: 20px; }
-    .header h1 {
-      font-family: 'Cinzel', serif; font-size: 1.8rem; color: #c0c0c0;
-      text-shadow: 0 0 20px rgba(192, 192, 192, 0.5); letter-spacing: 2px;
+    .header { text-align: center; margin-bottom: 15px; }
+    .header h1 { font-family: 'Cinzel', serif; font-size: 1.6rem; color: #c0c0c0; text-shadow: 0 0 15px rgba(192,192,192,0.4); }
+    .header .subtitle { font-size: 0.8rem; color: #2d5a2d; margin-top: 3px; }
+    
+    /* 砂時計（寮ポイント） */
+    .hourglass-section {
+      display: flex; justify-content: center; align-items: flex-end;
+      margin-bottom: 20px; gap: 15px;
     }
-    .header .subtitle { font-size: 0.85rem; color: #2d5a2d; margin-top: 5px; }
+    .hourglass {
+      width: 60px; height: 140px; position: relative;
+      background: linear-gradient(180deg, rgba(192,192,192,0.1) 0%, rgba(192,192,192,0.05) 100%);
+      border: 2px solid rgba(192,192,192,0.3); border-radius: 30px 30px 10px 10px;
+      overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end;
+    }
+    .hourglass::before {
+      content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 40px; height: 20px; background: rgba(192,192,192,0.2);
+      border-radius: 0 0 20px 20px;
+    }
+    .gems {
+      background: linear-gradient(180deg, #50c878 0%, #2d5a2d 50%, #1a472a 100%);
+      transition: height 1s ease; width: 100%; border-radius: 0 0 8px 8px;
+      box-shadow: inset 0 5px 15px rgba(80,200,120,0.3);
+    }
+    .hourglass-label { text-align: center; margin-top: 8px; font-size: 0.75rem; color: #2d5a2d; }
+    .points-display {
+      text-align: center; font-family: 'Cinzel', serif;
+      font-size: 2rem; color: #50c878; text-shadow: 0 0 20px rgba(80,200,120,0.5);
+    }
+    .points-sub { font-size: 0.9rem; color: #c0c0c0; margin-top: 5px; }
+    
     .badge-row {
-      display: flex; justify-content: center; flex-wrap: wrap; gap: 8px;
-      margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.3);
+      display: flex; justify-content: center; flex-wrap: wrap; gap: 6px;
+      margin-bottom: 15px; padding: 12px; background: rgba(0,0,0,0.3);
       border-radius: 10px; border: 1px solid rgba(192,192,192,0.2);
     }
     .milestone-badge {
-      width: 32px; height: 32px; border-radius: 50%; display: flex;
-      align-items: center; justify-content: center; font-size: 14px;
-      transition: all 0.3s; cursor: default;
+      width: 28px; height: 28px; border-radius: 50%; display: flex;
+      align-items: center; justify-content: center; font-size: 12px;
+      transition: all 0.3s;
     }
-    .milestone-badge.locked { background: rgba(50,50,50,0.5); filter: grayscale(1); opacity: 0.4; }
+    .milestone-badge.locked { background: rgba(50,50,50,0.5); filter: grayscale(1); opacity: 0.3; }
     .milestone-badge.unlocked {
       background: linear-gradient(135deg, #1a472a, #2d5a2d);
-      box-shadow: 0 0 10px rgba(45,90,45,0.5); animation: glow 2s infinite;
+      box-shadow: 0 0 8px rgba(45,90,45,0.5); animation: glow 2s infinite;
     }
-    @keyframes glow {
-      0%, 100% { box-shadow: 0 0 10px rgba(45,90,45,0.5); }
-      50% { box-shadow: 0 0 20px rgba(192,192,192,0.8); }
-    }
-    .progress-section {
-      background: rgba(45,90,45,0.15); border: 1px solid rgba(45,90,45,0.4);
-      border-radius: 10px; padding: 15px; margin-bottom: 20px;
-    }
-    .progress-bar { height: 24px; background: rgba(0,0,0,0.4); border-radius: 12px; overflow: hidden; position: relative; }
-    .progress-fill {
-      height: 100%; background: linear-gradient(90deg, #1a472a, #2d5a2d, #4a7c4a);
-      border-radius: 12px; transition: width 0.5s ease; position: relative;
-    }
-    .progress-fill::after { content: '🐍'; position: absolute; right: 5px; top: 50%; transform: translateY(-50%); font-size: 14px; }
-    .progress-text { text-align: center; margin-top: 10px; color: #c0c0c0; }
+    @keyframes glow { 0%,100%{box-shadow:0 0 8px rgba(45,90,45,0.5);} 50%{box-shadow:0 0 15px rgba(80,200,120,0.8);} }
+    
     .current-milestone {
-      text-align: center; padding: 15px; margin-bottom: 20px;
+      text-align: center; padding: 12px; margin-bottom: 15px;
       background: rgba(0,0,0,0.3); border-radius: 10px;
       border: 1px solid rgba(192,192,192,0.2);
     }
-    .current-milestone .event { font-size: 1.3rem; margin-bottom: 5px; }
-    .current-milestone .next { font-size: 0.85rem; color: #2d5a2d; }
-    .input-section { display: flex; gap: 10px; margin-bottom: 20px; }
+    .current-milestone .event { font-size: 1.1rem; margin-bottom: 5px; }
+    .current-milestone .next { font-size: 0.8rem; color: #50c878; font-weight: bold; }
+    
+    .input-section { display: flex; gap: 8px; margin-bottom: 15px; }
     .input-section input {
-      flex: 1; padding: 12px 15px; border: 2px solid rgba(45,90,45,0.4); border-radius: 8px;
-      background: rgba(0,0,0,0.3); color: #c0c0c0; font-size: 1rem;
+      flex: 1; padding: 10px 12px; border: 2px solid rgba(45,90,45,0.4); border-radius: 8px;
+      background: rgba(0,0,0,0.3); color: #c0c0c0; font-size: 0.95rem;
     }
-    .input-section input::placeholder { color: #555; }
-    .input-section input:focus { outline: none; border-color: #2d5a2d; box-shadow: 0 0 10px rgba(45,90,45,0.3); }
-    .points-input {
-      width: 80px; padding: 12px; border: 2px solid rgba(45,90,45,0.4); border-radius: 8px;
-      background: rgba(0,0,0,0.3); color: #c0c0c0; font-size: 1rem; text-align: center;
-    }
+    .input-section input:focus { outline: none; border-color: #2d5a2d; }
+    .points-input { width: 70px; text-align: center; }
     .input-section button {
-      padding: 12px 20px; background: linear-gradient(135deg, #1a472a, #2d5a2d);
+      padding: 10px 16px; background: linear-gradient(135deg, #1a472a, #2d5a2d);
       border: none; border-radius: 8px; color: #c0c0c0; font-family: 'Cinzel', serif;
       font-weight: bold; cursor: pointer; transition: all 0.3s;
     }
-    .input-section button:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(45,90,45,0.5); }
-    .wish-list { list-style: none; max-height: 300px; overflow-y: auto; }
+    .input-section button:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(45,90,45,0.5); }
+    
+    .wish-list { list-style: none; max-height: 250px; overflow-y: auto; }
     .wish-item {
-      display: flex; align-items: center; gap: 12px; padding: 12px;
+      display: flex; align-items: center; gap: 10px; padding: 10px;
       background: rgba(255,255,255,0.03); border: 1px solid rgba(45,90,45,0.2);
-      border-radius: 8px; margin-bottom: 8px; transition: all 0.3s;
+      border-radius: 8px; margin-bottom: 6px; transition: all 0.3s;
     }
-    .wish-item:hover { background: rgba(45,90,45,0.1); transform: translateX(5px); }
+    .wish-item:hover { background: rgba(45,90,45,0.1); transform: translateX(3px); }
     .wish-item.completed { opacity: 0.5; }
     .wish-item.completed .wish-text { text-decoration: line-through; color: #555; }
     .checkbox {
-      width: 24px; height: 24px; border: 2px solid #2d5a2d; border-radius: 50%; cursor: pointer;
+      width: 22px; height: 22px; border: 2px solid #2d5a2d; border-radius: 50%; cursor: pointer;
       display: flex; align-items: center; justify-content: center; transition: all 0.3s; flex-shrink: 0;
     }
     .checkbox:hover { background: rgba(45,90,45,0.3); }
     .checkbox.checked { background: #2d5a2d; }
-    .checkbox.checked::after { content: '🐍'; font-size: 10px; }
-    .wish-text { flex: 1; font-size: 0.95rem; }
-    .wish-points { font-size: 0.8rem; padding: 4px 10px; border-radius: 12px; background: rgba(45,90,45,0.3); color: #c0c0c0; }
-    .delete-btn { background: none; border: none; color: #444; cursor: pointer; font-size: 1.2rem; }
+    .checkbox.checked::after { content: '💎'; font-size: 10px; }
+    .wish-text { flex: 1; font-size: 0.9rem; }
+    .wish-points { font-size: 0.75rem; padding: 3px 8px; border-radius: 10px; background: rgba(45,90,45,0.3); }
+    .delete-btn { background: none; border: none; color: #444; cursor: pointer; font-size: 1rem; }
     .delete-btn:hover { color: #8b0000; }
-    .empty-state { text-align: center; padding: 30px; color: #555; }
-    .quote { text-align: center; font-style: italic; color: #2d5a2d; margin-top: 20px; padding: 15px; border-top: 1px solid rgba(45,90,45,0.3); }
+    .empty-state { text-align: center; padding: 25px; color: #555; }
+    .quote { text-align: center; font-style: italic; color: #2d5a2d; margin-top: 15px; padding: 12px; border-top: 1px solid rgba(45,90,45,0.3); font-size: 0.85rem; }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
-      <h1>🐍 2026 Slytherin WishList 🐍</h1>
+      <h1>🐍 2026 Slytherin WishList</h1>
       <p class="subtitle">野心を持って、目標を達成せよ</p>
     </div>
-    <div class="badge-row" id="badgeRow"></div>
-    <div class="progress-section">
-      <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width: 0%"></div></div>
-      <p class="progress-text"><span id="currentPoints">0</span> / 200 点</p>
+    
+    <div class="hourglass-section">
+      <div>
+        <div class="hourglass"><div class="gems" id="gems" style="height:0%"></div></div>
+        <p class="hourglass-label">スリザリン寮</p>
+      </div>
+      <div>
+        <div class="points-display"><span id="currentPoints">0</span><span style="font-size:1rem;color:#888"> / 200</span></div>
+        <p class="points-sub" id="nextMilestoneText">次: 🐍 組み分け まで あと10点</p>
+      </div>
     </div>
+    
+    <div class="badge-row" id="badgeRow"></div>
+    
     <div class="current-milestone" id="currentMilestone">
       <div class="event">🏰 ホグワーツ入学</div>
-      <div class="next">次: 🐍 組み分け：スリザリン！ まで あと10点</div>
     </div>
+    
     <div class="input-section">
       <input type="text" id="wishInput" placeholder="新しいWishを入力...">
-      <input type="number" class="points-input" id="pointsInput" placeholder="点数" min="1" max="20" value="4">
+      <input type="number" class="points-input" id="pointsInput" placeholder="点" min="1" max="20" value="4">
       <button onclick="addWish()">追加</button>
     </div>
-    <ul class="wish-list" id="wishList">
-      <li class="empty-state"><p>🐍 Wishを追加して冒険を始めよう</p></li>
-    </ul>
-    <div class="quote">
-      <p>"Those cunning folk use any means to achieve their ends."</p>
-      <p style="font-size:0.8rem;color:#444;margin-top:5px;">— The Sorting Hat</p>
-    </div>
+    
+    <ul class="wish-list" id="wishList"><li class="empty-state">🐍 Wishを追加して冒険を始めよう</li></ul>
+    
+    <div class="quote">"Those cunning folk use any means to achieve their ends." — The Sorting Hat</div>
   </div>
+
   <script>
     const milestones = [
       {pts:0,icon:'🏰',name:'ホグワーツ入学'},{pts:10,icon:'🐍',name:'組み分け：スリザリン！'},
@@ -137,65 +155,64 @@
       {pts:200,icon:'💎',name:'賢者の石を守った！'}
     ];
     let wishes = JSON.parse(localStorage.getItem('slytherin-wishes-2026') || '[]');
+    
     document.addEventListener('DOMContentLoaded', () => { renderAll(); setupEnterKey(); });
-    function setupEnterKey() { document.getElementById('wishInput').addEventListener('keypress', e => { if (e.key === 'Enter') addWish(); }); }
-    function getTotal() { return wishes.filter(w => w.completed).reduce((sum, w) => sum + (w.points || 0), 0); }
-    function getCurrentMilestone(pts) {
-      for (let i = milestones.length - 1; i >= 0; i--) { if (pts >= milestones[i].pts) return i; }
-      return 0;
-    }
-    function renderBadges(pts) {
-      const row = document.getElementById('badgeRow');
-      row.innerHTML = milestones.map((m, i) => 
-        `<div class="milestone-badge ${pts >= m.pts ? 'unlocked' : 'locked'}" title="${m.name}">${m.icon}</div>`
-      ).join('');
-    }
-    function renderMilestone(pts) {
-      const idx = getCurrentMilestone(pts);
-      const current = milestones[idx];
-      const next = milestones[idx + 1];
-      const el = document.getElementById('currentMilestone');
-      el.innerHTML = `<div class="event">${current.icon} ${current.name}</div>` +
-        (next ? `<div class="next">次: ${next.icon} ${next.name} まで あと${next.pts - pts}点</div>` : `<div class="next">🎉 全マイルストーン達成！</div>`);
-    }
+    function setupEnterKey() { document.getElementById('wishInput').addEventListener('keypress', e => { if(e.key==='Enter')addWish(); }); }
+    function getTotal() { return wishes.filter(w=>w.completed).reduce((s,w)=>s+(w.points||0),0); }
+    function getCurrentMilestoneIndex(pts) { for(let i=milestones.length-1;i>=0;i--){if(pts>=milestones[i].pts)return i;} return 0; }
+    
     function renderAll() {
       const pts = getTotal();
+      const idx = getCurrentMilestoneIndex(pts);
+      const current = milestones[idx];
+      const next = milestones[idx+1];
+      
       document.getElementById('currentPoints').textContent = pts;
-      document.getElementById('progressFill').style.width = (pts / 200 * 100) + '%';
-      renderBadges(pts);
-      renderMilestone(pts);
+      document.getElementById('gems').style.height = Math.min(pts/200*100,100)+'%';
+      
+      // バッジ
+      document.getElementById('badgeRow').innerHTML = milestones.map((m,i)=>
+        `<div class="milestone-badge ${pts>=m.pts?'unlocked':'locked'}" title="${m.name}">${m.icon}</div>`
+      ).join('');
+      
+      // 現在のマイルストーン
+      document.getElementById('currentMilestone').innerHTML = `<div class="event">${current.icon} ${current.name}</div>`;
+      
+      // 次のマイルストーンまで
+      if(next) {
+        document.getElementById('nextMilestoneText').textContent = `次: ${next.icon} ${next.name} まで あと${next.pts-pts}点`;
+      } else {
+        document.getElementById('nextMilestoneText').textContent = '🎉 全マイルストーン達成！';
+      }
+      
       renderWishes();
     }
+    
     function renderWishes() {
       const list = document.getElementById('wishList');
-      if (!wishes.length) { list.innerHTML = '<li class="empty-state"><p>🐍 Wishを追加して冒険を始めよう</p></li>'; return; }
-      list.innerHTML = wishes.map(w => `
-        <li class="wish-item ${w.completed ? 'completed' : ''}">
-          <div class="checkbox ${w.completed ? 'checked' : ''}" onclick="toggleWish(${w.id})"></div>
+      if(!wishes.length){ list.innerHTML='<li class="empty-state">🐍 Wishを追加して冒険を始めよう</li>'; return; }
+      list.innerHTML = wishes.map(w=>`
+        <li class="wish-item ${w.completed?'completed':''}">
+          <div class="checkbox ${w.completed?'checked':''}" onclick="toggleWish(${w.id})"></div>
           <span class="wish-text">${escapeHtml(w.text)}</span>
           <span class="wish-points">${w.points}pt</span>
           <button class="delete-btn" onclick="deleteWish(${w.id})">×</button>
         </li>
       `).join('');
     }
+    
     function addWish() {
       const input = document.getElementById('wishInput');
-      const pointsInput = document.getElementById('pointsInput');
+      const pts = parseInt(document.getElementById('pointsInput').value)||4;
       const text = input.value.trim();
-      const points = parseInt(pointsInput.value) || 4;
-      if (!text) return;
-      wishes.push({ id: Date.now(), text, points, completed: false });
-      save(); renderAll(); input.value = '';
-      input.style.boxShadow = '0 0 30px rgba(45,90,45,0.8)';
-      setTimeout(() => input.style.boxShadow = '', 500);
+      if(!text)return;
+      wishes.push({id:Date.now(),text,points:pts,completed:false});
+      save(); renderAll(); input.value='';
     }
-    function toggleWish(id) {
-      const w = wishes.find(x => x.id === id);
-      if (w) { w.completed = !w.completed; save(); renderAll(); }
-    }
-    function deleteWish(id) { wishes = wishes.filter(w => w.id !== id); save(); renderAll(); }
-    function save() { localStorage.setItem('slytherin-wishes-2026', JSON.stringify(wishes)); }
-    function escapeHtml(t) { const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+    function toggleWish(id) { const w=wishes.find(x=>x.id===id); if(w){w.completed=!w.completed; save(); renderAll();} }
+    function deleteWish(id) { wishes=wishes.filter(w=>w.id!==id); save(); renderAll(); }
+    function save() { localStorage.setItem('slytherin-wishes-2026',JSON.stringify(wishes)); }
+    function escapeHtml(t) { const d=document.createElement('div'); d.textContent=t; return d.innerHTML; }
   </script>
 </body>
 </html>
